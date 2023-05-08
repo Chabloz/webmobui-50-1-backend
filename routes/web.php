@@ -22,6 +22,16 @@ Route::get('/api/user/login', [App\Http\Controllers\UserController::class, 'logi
 
 // route group for authenticated users only
 Route::group(['middleware' => ['auth.api']], function () {
-    Route::get('/api/user/logout', [App\Http\Controllers\UserController::class, 'logout']);
+    Route::get(
+        '/api/user/logout',
+        [App\Http\Controllers\UserController::class, 'logout']
+    );
+
+    Route::get(
+        '/api/msg/add',
+        [App\Http\Controllers\MessageController::class, 'add']
+    );
+
+
 });
 

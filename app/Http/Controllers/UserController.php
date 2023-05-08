@@ -19,6 +19,8 @@ class UserController extends Controller
             ], 400);
         }
         // other checks todo
+
+        // Automatically create a user if no account exists
         $user = User::firstOrCreate([
             'name' => $name,
             'password' => '',
@@ -34,7 +36,6 @@ class UserController extends Controller
 
     public function logout()
     {
-
         Auth::logout();
         return response()->json([
             'status' => 'success',

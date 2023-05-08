@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Message extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
@@ -12,8 +12,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'password',
+        'msg',
     ];
 
     /**
@@ -22,21 +21,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'updated_at',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'last_activity_at' => 'datetime',
-    ];
-
-    // hasMany messageas
-    public function messages()
+    public function user()
     {
-        return $this->hasMany(Message::class);
+        return $this->belongsTo(User::class);
     }
+
+
 }

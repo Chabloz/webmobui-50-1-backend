@@ -1,5 +1,5 @@
 <script setup>
-
+  fetch('/api/user/login?username=test');
 </script>
 
 <template>
