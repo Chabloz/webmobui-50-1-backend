@@ -18,7 +18,10 @@ Route::get('/', function () {
 });
 
 /* API ROUTES */
-Route::get('/api/user/login', [App\Http\Controllers\UserController::class, 'login']);
+Route::get(
+    '/api/user/login',
+    [App\Http\Controllers\UserController::class, 'login'
+]);
 
 // route group for authenticated users only
 Route::group(['middleware' => ['auth.api']], function () {

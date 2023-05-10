@@ -18,7 +18,7 @@ class UserController extends Controller
                 'message' => 'Name should contain only alphabets'
             ], 400);
         }
-        // other checks todo
+        // other checks ?
 
         // Automatically create a user if no account exists
         $user = User::firstOrCreate([
