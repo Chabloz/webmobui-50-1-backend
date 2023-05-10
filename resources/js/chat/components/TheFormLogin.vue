@@ -1,29 +1,43 @@
 <script setup>
-import { useQuasar } from 'quasar';
-import { ref } from 'vue';
+import { ref, watch} from 'vue';
+import { useFetchJson } from '@/composables/useFetchJson.js';
+import BaseMessageWarning from '../../components/BaseMessageWarning.vue';
+
+const emits = defineEmits(['login']);
 
 const name = ref(null);
+const url = ref('');
+const showConnectionError = ref(false);
+const {data: logged} = useFetchJson(url, true);
 
-async function  onSubmit () {
-  console.log('Submitted!', name.value);
-  const res = await fetch('/api/user/login?name=' + name.value);
-  const data = await res.json();
-  console.log(data);
+watch(logged, () => {
+  if (logged.value?.status != 'success') {
+    showConnectionError.value = true;
+    return;
+  };
+  emits('login');
+});
+
+function onSubmit () {
+  url.value = `/api/user/login?name=${name.value}`;
 }
 
 function onReset () {
-  name.value = null
+  name.value = null;
 }
 </script>
 
 <template>
   <div class="column items-center">
+    <base-message-warning v-if="showConnectionError">
+      Problems with the connection to the chat. Please try again later.
+    </base-message-warning>
     <h1 class="row text-h2">Chat IM</h1>
     <div class="row full-width justify-center">
       <q-form
         @submit="onSubmit"
         @reset="onReset"
-        class="col-6 q-gutter-md"
+        class="col-6 col-md-4 q-gutter-md"
       >
         <q-input
           filled
@@ -31,7 +45,7 @@ function onReset () {
           label="Username *"
           hint="Your username for the chat"
           lazy-rules
-          :rules="[ val => val && val.match(/^[a-z]+$/i) && val.length > 1 || 'Alphabetic characters only']"
+          :rules="[ val => val && val.match(/^[a-z]+$/i) && val.length > 1 || 'Alphabetic characters only, at least 2 characters']"
         />
 
         <div>

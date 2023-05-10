@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('vuetest');
+    $data = ['some example data', 'some other data'];
+    return view('vuetest', [
+        'data' => $data
+    ]);
 });
 
 /* API ROUTES */

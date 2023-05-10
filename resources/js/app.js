@@ -1,28 +1,24 @@
-import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import { createApp } from 'vue';
+import { Quasar } from 'quasar';
+import '@quasar/extras/roboto-font/roboto-font.css';
+import '@quasar/extras/material-icons/material-icons.css';
+import 'quasar/dist/quasar.css';
 
-// Import icon libraries
-import '@quasar/extras/roboto-font/roboto-font.css'
-import '@quasar/extras/material-icons/material-icons.css'
+import App from './AppChat.vue';
 
-// Import Quasar css
-import 'quasar/dist/quasar.css'
+// Example data that come directly from the Laravel blade template
+console.log(BACK_DATA);
 
-// Assumes your root component is App.vue
-// and placed in same folder as main.js
-import App from './AppChat.vue'
-
-const myApp = createApp(App)
+const myApp = createApp(App);
 
 myApp.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
+  plugins: {},
   config: {
     brand: {
       negative: 'tomato',
     },
-    dark: 'auto' // or Boolean true/false
+    dark: 'auto'
   }
-})
+});
 
-// Assumes you have a <div id="app"></div> in your index.html
-myApp.mount('#app')
+myApp.mount('#app');
