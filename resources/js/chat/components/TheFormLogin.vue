@@ -27,11 +27,9 @@ function onReset () {
 </script>
 
 <template>
-  <div class="full-width justify-center">
     <q-form
       @submit="onSubmit"
       @reset="onReset"
-      class="col-6 col-md-4 q-gutter-md"
     >
       <q-input
         filled
@@ -47,5 +45,4 @@ function onReset () {
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
       </div>
     </q-form>
-  </div>
 </template>

@@ -16,17 +16,18 @@
 
     <h1 class="row text-h2">Chat IM</h1>
 
-    <the-form-login
-      v-if="page=='login'"
-      class="row"
-      @login="page='chat'"
-      @conn-error="showConnectionError=true"
-      @conn-ok="showConnectionError=false"
-    />
+    <div v-if="page=='login'" class="row full-width justify-center">
+        <the-form-login
+          class="col-6 col-md-4"
+          @login="page='chat'"
+          @conn-error="showConnectionError=true"
+          @conn-ok="showConnectionError=false"
+        />
+    </div>
 
-    <the-chat
-      v-if="page=='chat'"
-      class="row"
-    />
+    <div v-if="page=='chat'" class="row full-width justify-center">
+      <the-chat class="col-6 col-md-4"/>
+    </div>
+
   </div>
 </template>

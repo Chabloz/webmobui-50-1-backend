@@ -22,13 +22,11 @@
 </script>
 
 <template>
-  <div class="full-width justify-center">
-    <div class="col-6 col-md-4">
-      <q-chat-message v-for="msg of allMsg"
-        name="u2"
-        :text="[msg.msg]"
-        :stamp="date.format(new Date(msg.created_at))"
-      />
-    </div>
+  <div>
+    <q-chat-message v-for="msg of allMsg"
+      name="u2"
+      :text="[msg.msg]"
+      :stamp="date.format(new Date(msg.created_at))"
+    />
   </div>
 </template>
