@@ -38,6 +38,11 @@ Route::group(['middleware' => ['auth.api']], function () {
         [App\Http\Controllers\MessageController::class, 'add']
     );
 
+    Route::get(
+        '/api/msg/get',
+        [App\Http\Controllers\MessageController::class, 'get']
+    );
+
 
 });
 

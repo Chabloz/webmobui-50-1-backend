@@ -29,5 +29,10 @@ class Message extends Authenticatable
         return $this->belongsTo(User::class);
     }
 
+    public function getAllAfterTimestamp($timestamp)
+    {
+        return $this->where('created_at', '>', $timestamp)->get();
+    }
+
 
 }

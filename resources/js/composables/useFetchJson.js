@@ -14,5 +14,5 @@ export function useFetchJson(url, lazy = false) {
 
   if (isRef(url)) watch(url, () => fecthJson(url));
 
-  return {data};
+  return {data, fecthJson: () => fecthJson(url)};
 }

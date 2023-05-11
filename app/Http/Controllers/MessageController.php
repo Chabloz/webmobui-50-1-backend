@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
+
+    public function get(Request $request, Message $message)
+    {
+        $user = $request->user();
+        $now = $user->last_activity_at ?? now();
+        $user->last_activity_at = now();
+        $user->save();
+        return $message->getAllAfterTimestamp($now);
+    }
+
+
     public function add(Request $request)
     {
         $msg = $request->input('msg');
-        // ??? todo check ???
-        if (strlen($msg) < 2) {
+        if (strlen($msg) < 1) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Message should contain at least 2 characters'
+                'message' => 'Message should contain at least 1 characters'
             ], 400);
         }
 
