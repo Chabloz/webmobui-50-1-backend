@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
-class Message extends Authenticatable
+class Message extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -24,15 +27,26 @@ class Message extends Authenticatable
         'updated_at',
     ];
 
-    public function user()
+    protected $casts = [
+        'sentByMe' => 'boolean',
+    ];
+
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getAllAfterTimestamp($timestamp)
+    public function getAllAfterTimestamp($timestamp) : Collection
     {
-        return $this->where('created_at', '>', $timestamp)->get();
+        return $this->where('created_at', '>', $timestamp)->with('user:id,name')->get()->append('sentByMe');
     }
 
+    protected function getSentByMeAttribute(): bool
+    {
+        $user = Auth::user();
+        if (!$user) return false;
+        return $this->user->id === $user->id;
+    }
 
 }

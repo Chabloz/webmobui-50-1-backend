@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    public function login(Request $request) : JsonResponse
     {
         $name = $request->input('name');
         // check if the name has only alphabets
@@ -28,13 +30,25 @@ class UserController extends Controller
 
         Auth::login($user);
 
+        $user->last_activity_at = now();
+        $user->save();
+
+        $request->session()->put('last_get_at', $user->last_activity_at);
+
         return response()->json([
             'status' => 'success',
             'message' => 'Login successful',
         ]);
     }
 
-    public function logout()
+    public function online(User $modelUser) : Collection
+    {
+        // Get all users who has made an action in the last 5 seconds
+        $users = $modelUser->getActiveUserAfterTimestamp(now()->subSeconds(5));
+        return $users;
+    }
+
+    public function logout() : JsonResponse
     {
         Auth::logout();
         return response()->json([

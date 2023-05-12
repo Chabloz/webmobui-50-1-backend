@@ -34,6 +34,11 @@ Route::group(['middleware' => ['auth.api']], function () {
     );
 
     Route::get(
+        '/api/user/online',
+        [App\Http\Controllers\UserController::class, 'online']
+    );
+
+    Route::get(
         '/api/msg/add',
         [App\Http\Controllers\MessageController::class, 'add']
     );

@@ -40,7 +40,7 @@ function onReset () {
         :rules="[ val => val && val.match(/^[a-z]+$/i) && val.length > 1 || 'Alphabetic characters only, at least 2 characters']"
       />
 
-      <div>
+      <div class="q-mt-md">
         <q-btn label="Login" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
       </div>

@@ -1,18 +1,18 @@
 import { isRef, ref, unref, watch } from "vue";
 
-export function useFetchJson(url, lazy = false) {
+export function useFetchJson(url, lazy = false, triggerFetchOnChange = true) {
 
   const data = ref(null);
 
-  async function fecthJson(url){
+  async function fetchJson(url){
     const response = await fetch(unref(url));
     const res = await response.json();
     data.value = res;
   }
 
-  if (!lazy) fecthJson(url);
+  if (!lazy) fetchJson(url);
 
-  if (isRef(url)) watch(url, () => fecthJson(url));
+  if (isRef(url) && triggerFetchOnChange) watch(url, () => fetchJson(url));
 
-  return {data, fecthJson: () => fecthJson(url)};
+  return {data, fetchJson: () => fetchJson(url)};
 }
