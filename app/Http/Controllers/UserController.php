@@ -17,7 +17,7 @@ class UserController extends Controller
         if (!ctype_alpha($name) || strlen($name) < 2) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Name should contain only alphabets'
+                'message' => 'Name should contain only letters'
             ], 400);
         }
         // other checks ?
